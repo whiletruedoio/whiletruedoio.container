@@ -1,0 +1,113 @@
+---
+# roles/nextcloud/tasks/main.yml
+
+## Prerequisites
+
+- name: "Manage podman Socket"
+  ansible.builtin.service:
+    name: "podman.socket"
+    state: "started"
+  become: true
+  tags:
+    - "nextcloud"
+    - "podman"
+    - "service"
+
+- name: "Manage podman-auto-update Timer"
+  ansible.builtin.service:
+    name: "podman-auto-update.timer"
+    enabled: true
+  become: true
+  tags:
+    - "nextcloud"
+    - "podman"
+    - "service"
+
+## Network
+
+- name: "Manage nextcloud Podman Network"
+  containers.podman.podman_network:
+    name: "{{ nextcloud_net_name }}"
+    state: "present"
+  become: true
+  tags:
+    - "nextcloud"
+    - "podman"
+    - "network"
+
+## Database
+
+- name: "Pull nextcloud-db Image"
+  containers.podman.podman_image:
+    name: "{{ nextcloud_db_image_name }}"
+    tag: "{{ nextcloud_db_image_tag }}"
+    state: "present"
+  become: true
+  tags:
+    - "nextcloud"
+    - "podman"
+    - "image"
+
+- name: "Create nextcloud-db Service File"
+  ansible.builtin.template:
+    src: "container-nextcloud-db.service.j2"
+    dest: "/etc/systemd/system/container-nextcloud-db.service"
+    owner: "root"
+    group: "root"
+    mode: 0644
+  become: true
+  tags:
+    - "nextcloud"
+    - "podman"
+    - "service"
+
+- name: "Manage nextcloud-db Service"
+  ansible.builtin.systemd:
+    name: "container-nextcloud-db.service"
+    state: "started"
+    enabled: true
+    daemon_reload: true
+  become: true
+  tags:
+    - "nextcloud"
+    - "podman"
+    - "service"
+
+## Application
+
+- name: "Pull nextcloud-app Image"
+  containers.podman.podman_image:
+    name: "{{ nextcloud_app_image_name }}"
+    tag: "{{ nextcloud_app_image_tag }}"
+    state: "present"
+  become: true
+  tags:
+    - "nextcloud"
+    - "podman"
+    - "image"
+
+- name: "Create nextcloud-app Service File"
+  ansible.builtin.template:
+    src: "container-nextcloud-app.service.j2"
+    dest: "/etc/systemd/system/container-nextcloud-app.service"
+    owner: "root"
+    group: "root"
+    mode: 0644
+  become: true
+  tags:
+    - "nextcloud"
+    - "podman"
+    - "service"
+
+- name: "Manage nextcloud-app Service"
+  ansible.builtin.systemd:
+    name: "container-nextcloud-app.service"
+    state: "started"
+    enabled: true
+    daemon_reload: true
+  become: true
+  tags:
+    - "nextcloud"
+    - "podman"
+    - "service"
+...

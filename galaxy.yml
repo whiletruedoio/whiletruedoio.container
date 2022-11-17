@@ -1,0 +1,31 @@
+---
+# galaxy.yml
+
+namespace: "whiletruedoio"
+name: "container"
+description: "Ansible collection to provide prepared container deployments."
+
+version: "1.0.0"
+
+readme: "README.md"
+license_file: "LICENSE"
+
+homepage: "https://while-true-do.io"
+repository: "https://github.com/whiletruedoio/whiletruedoio.container"
+documentation: "https://github.com/whiletruedoio/whiletruedoio.container"
+issues: "https://github.com/whiletruedoio/whiletruedoio.container/issues"
+
+authors:
+  - "Daniel Schier <dschier@while-true-do.io>"
+
+tags:
+  - "package"
+  - "service"
+  - "configuration"
+  - "network"
+  - "misc"
+
+dependencies:
+  "community.general": ">=1.0.0"
+  "containers.podman": ">=1.0.0"
+...

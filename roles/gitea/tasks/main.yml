@@ -1,0 +1,113 @@
+---
+# roles/gitea/tasks/main.yml
+
+## Prerequisites
+
+- name: "Manage podman Socket"
+  ansible.builtin.service:
+    name: "podman.socket"
+    state: "started"
+  become: true
+  tags:
+    - "nextcloud"
+    - "podman"
+    - "service"
+
+- name: "Manage podman-auto-update Timer"
+  ansible.builtin.service:
+    name: "podman-auto-update.timer"
+    enabled: true
+  become: true
+  tags:
+    - "nextcloud"
+    - "podman"
+    - "service"
+
+## Network
+
+- name: "Create gitea Podman Network"
+  containers.podman.podman_network:
+    name: "{{ gitea_net_name }}"
+    state: "present"
+  become: true
+  tags:
+    - "gitea"
+    - "podman"
+    - "network"
+
+## Database
+
+- name: "Pull gitea-db Image"
+  containers.podman.podman_image:
+    name: "{{ gitea_db_image_name }}"
+    tag: "{{ gitea_db_image_tag }}"
+    state: "present"
+  become: true
+  tags:
+    - "gitea"
+    - "podman"
+    - "image"
+
+- name: "Create gitea-db Service File"
+  ansible.builtin.template:
+    src: "container-gitea-db.service.j2"
+    dest: "/etc/systemd/system/container-gitea-db.service"
+    owner: "root"
+    group: "root"
+    mode: 0644
+  become: true
+  tags:
+    - "gitea"
+    - "podman"
+    - "service"
+
+- name: "Start & Enable gitea-db Service"
+  ansible.builtin.systemd:
+    name: "container-gitea-db.service"
+    state: "started"
+    enabled: true
+    daemon_reload: true
+  become: true
+  tags:
+    - "gitea"
+    - "podman"
+    - "service"
+
+## Application
+
+- name: "Pull gitea-app Image"
+  containers.podman.podman_image:
+    name: "{{ gitea_app_image_name }}"
+    tag: "{{ gitea_app_image_tag }}"
+    state: "present"
+  become: true
+  tags:
+    - "gitea"
+    - "podman"
+    - "image"
+
+- name: "Create gitea-app Service File"
+  ansible.builtin.template:
+    src: "container-gitea-app.service.j2"
+    dest: "/etc/systemd/system/container-gitea-app.service"
+    owner: "root"
+    group: "root"
+    mode: 0644
+  become: true
+  tags:
+    - "gitea"
+    - "podman"
+    - "service"
+
+- name: "Start & Enable gitea-app Service"
+  ansible.builtin.systemd:
+    name: "container-gitea-app.service"
+    state: "started"
+    enabled: true
+    daemon_reload: true
+  become: true
+  tags:
+    - "gitea"
+    - "podman"
+    - "service"
+...

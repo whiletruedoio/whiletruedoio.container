@@ -1,0 +1,13 @@
+---
+- name: "Install gitea Podman Containers"
+  hosts: "localhost"
+
+  tasks:
+
+    - name: "Import gitea Role"
+      ansible.builtin.import_role:
+        name: "whiletruedoio.container.gitea"
+      vars:
+        database_pass: "password"
+        admin_pass: "password"
+...

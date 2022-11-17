@@ -1,0 +1,13 @@
+---
+- name: "Install nextcloud Podman Containers"
+  hosts: "localhost"
+
+  tasks:
+
+    - name: "Import nextcloud Role"
+      ansible.builtin.import_role:
+        name: "whiletruedoio.container.nextcloud"
+      vars:
+        database_pass: "password"
+        admin_pass: "password"
+...

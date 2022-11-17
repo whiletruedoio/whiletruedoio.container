@@ -1,0 +1,27 @@
+---
+# roles/nextcloud/defaults/main.yml
+
+## Deployment Management
+
+nextcloud_net_name: "nextcloud"
+nextcloud_net_port: "8080"
+
+## Database Management
+
+nextcloud_db_image_name: "docker.io/library/mariadb"
+nextcloud_db_image_tag: "10"
+nextcloud_db_image_auto_update: true
+
+nextcloud_db_name: "nextcloud"
+nextcloud_db_user: "nextcloud"
+nextcloud_db_pass: "{{ database_pass | mandatory }}"
+
+## App Management
+
+nextcloud_app_image_name: "docker.io/library/nextcloud"
+nextcloud_app_image_tag: "25"
+nextcloud_app_image_auto_update: true
+
+nextcloud_admin_user: "nextcloud-admin"
+nextcloud_admin_pass: "{{ admin_pass | mandatory }}"
+...
