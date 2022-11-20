@@ -1,5 +1,5 @@
 ---
-# roles/owncast/tasks/main.yml
+# roles/logpaste/tasks/main.yml
 
 ## Prerequisites
 
@@ -9,7 +9,7 @@
     state: "started"
   become: true
   tags:
-    - "owncast"
+    - "logpaste"
     - "podman"
     - "service"
 
@@ -19,57 +19,57 @@
     enabled: true
   become: true
   tags:
-    - "owncast"
+    - "logpaste"
     - "podman"
     - "service"
 
 ## Network
 
-- name: "Create owncast Podman Network"
+- name: "Create logpaste Podman Network"
   containers.podman.podman_network:
-    name: "{{ owncast_net_name }}"
+    name: "{{ logpaste_net_name }}"
     state: "present"
   become: true
   tags:
-    - "owncast"
+    - "logpaste"
     - "podman"
     - "network"
 
 ## Application
 
-- name: "Pull owncast-app Image"
+- name: "Pull logpaste-app Image"
   containers.podman.podman_image:
-    name: "{{ owncast_app_image_name }}"
-    tag: "{{ owncast_app_image_tag }}"
+    name: "{{ logpaste_app_image_name }}"
+    tag: "{{ logpaste_app_image_tag }}"
     state: "present"
   become: true
   tags:
-    - "owncast"
+    - "logpaste"
     - "podman"
     - "image"
 
-- name: "Create owncast-app Service File"
+- name: "Create logpaste-app Service File"
   ansible.builtin.template:
-    src: "container-owncast-app.service.j2"
-    dest: "/etc/systemd/system/container-owncast-app.service"
+    src: "container-logpaste-app.service.j2"
+    dest: "/etc/systemd/system/container-logpaste-app.service"
     owner: "root"
     group: "root"
     mode: 0644
   become: true
   tags:
-    - "owncast"
+    - "logpaste"
     - "podman"
     - "service"
 
-- name: "Start & Enable owncast-app Service"
+- name: "Start & Enable logpaste-app Service"
   ansible.builtin.systemd:
-    name: "container-owncast-app.service"
+    name: "container-logpaste-app.service"
     state: "started"
     enabled: true
     daemon_reload: true
   become: true
   tags:
-    - "owncast"
+    - "logpaste"
     - "podman"
     - "service"
 ...

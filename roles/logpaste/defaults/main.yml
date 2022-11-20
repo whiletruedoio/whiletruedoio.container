@@ -1,0 +1,14 @@
+---
+# roles/logpaste/defaults/main.yml
+
+## Deployment Management
+
+logpaste_net_port_http: "8086"
+logpaste_net_name: "logpaste"
+
+## App Management
+
+logpaste_app_image_name: "docker.io/mtlynch/logpaste"
+logpaste_app_image_tag: "latest"
+logpaste_app_image_auto_update: true
+...

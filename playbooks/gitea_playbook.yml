@@ -9,5 +9,4 @@
         name: "whiletruedoio.container.gitea"
       vars:
         database_pass: "password"
-        admin_pass: "password"
 ...

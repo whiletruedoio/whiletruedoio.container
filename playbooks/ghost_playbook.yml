@@ -1,5 +1,5 @@
 ---
-- name: "Install gitea Podman Containers"
+- name: "Install ghost Podman Containers"
   hosts: "localhost"
 
   tasks:
@@ -9,5 +9,4 @@
         name: "whiletruedoio.container.ghost"
       vars:
         database_pass: "password"
-        admin_pass: "password"
 ...

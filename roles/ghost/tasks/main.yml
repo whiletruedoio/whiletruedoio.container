@@ -9,7 +9,7 @@
     state: "started"
   become: true
   tags:
-    - "nextcloud"
+    - "ghost"
     - "podman"
     - "service"
 
@@ -19,7 +19,7 @@
     enabled: true
   become: true
   tags:
-    - "nextcloud"
+    - "ghost"
     - "podman"
     - "service"
 

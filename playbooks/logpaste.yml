@@ -1,0 +1,10 @@
+---
+- name: "Install logpaste Podman Containers"
+  hosts: "localhost"
+
+  tasks:
+
+    - name: "Import logpaste Role"
+      ansible.builtin.import_role:
+        name: "whiletruedoio.container.logpaste"
+...
