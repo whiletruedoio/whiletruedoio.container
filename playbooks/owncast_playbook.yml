@@ -1,0 +1,10 @@
+---
+- name: "Install gitea Podman Containers"
+  hosts: "localhost"
+
+  tasks:
+
+    - name: "Import owncast Role"
+      ansible.builtin.import_role:
+        name: "whiletruedoio.container.owncast"
+...

@@ -1,0 +1,15 @@
+---
+# roles/owncast/defaults/main.yml
+
+## Deployment Management
+
+owncast_net_port_http: "8083"
+owncast_net_port_rtmp: "1935"
+owncast_net_name: "owncast"
+
+## App Management
+
+owncast_app_image_name: "docker.io/gabekangas/owncast"
+owncast_app_image_tag: "latest"
+owncast_app_image_auto_update: true
+...

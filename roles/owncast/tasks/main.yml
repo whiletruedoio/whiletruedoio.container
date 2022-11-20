@@ -1,0 +1,75 @@
+---
+# roles/owncast/tasks/main.yml
+
+## Prerequisites
+
+- name: "Manage podman Socket"
+  ansible.builtin.service:
+    name: "podman.socket"
+    state: "started"
+  become: true
+  tags:
+    - "nextcloud"
+    - "podman"
+    - "service"
+
+- name: "Manage podman-auto-update Timer"
+  ansible.builtin.service:
+    name: "podman-auto-update.timer"
+    enabled: true
+  become: true
+  tags:
+    - "nextcloud"
+    - "podman"
+    - "service"
+
+## Network
+
+- name: "Create owncast Podman Network"
+  containers.podman.podman_network:
+    name: "{{ owncast_net_name }}"
+    state: "present"
+  become: true
+  tags:
+    - "owncast"
+    - "podman"
+    - "network"
+
+## Application
+
+- name: "Pull owncast-app Image"
+  containers.podman.podman_image:
+    name: "{{ owncast_app_image_name }}"
+    tag: "{{ owncast_app_image_tag }}"
+    state: "present"
+  become: true
+  tags:
+    - "owncast"
+    - "podman"
+    - "image"
+
+- name: "Create owncast-app Service File"
+  ansible.builtin.template:
+    src: "container-owncast-app.service.j2"
+    dest: "/etc/systemd/system/container-owncast-app.service"
+    owner: "root"
+    group: "root"
+    mode: 0644
+  become: true
+  tags:
+    - "owncast"
+    - "podman"
+    - "service"
+
+- name: "Start & Enable owncast-app Service"
+  ansible.builtin.systemd:
+    name: "container-owncast-app.service"
+    state: "started"
+    enabled: true
+    daemon_reload: true
+  become: true
+  tags:
+    - "owncast"
+    - "podman"
+    - "service"
+...

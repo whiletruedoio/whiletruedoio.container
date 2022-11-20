@@ -1,0 +1,43 @@
+[Unit]
+Description=Podman container-owncast-app.service
+Documentation=man:podman-generate-systemd(1)
+Wants=network-online.target
+After=network-online.target
+RequiresMountsFor=%t/containers
+
+[Service]
+Environment=PODMAN_SYSTEMD_UNIT=%n
+Restart=on-failure
+TimeoutStopSec=70
+Type=notify
+NotifyAccess=all
+
+ExecStartPre=/bin/rm -f %t/%n.ctr-id
+
+ExecStart=/usr/bin/podman run \
+	--cidfile=%t/%n.ctr-id \
+	--cgroups=no-conmon \
+	--rm \
+	--sdnotify=conmon \
+	--replace \
+	--publish {{ owncast_net_port_http }}:8080/tcp \
+	--publish {{ owncast_net_port_rtmp }}:1935/tcp \
+	--detach \
+	--tty \
+	--label "io.containers.autoupdate=registry" \
+	--volume owncast-app:/app/data:Z \
+	--network=owncast \
+	--name=owncast-app \
+	{{ owncast_app_image_name }}:{{ owncast_app_image_tag }}
+
+ExecStop=/usr/bin/podman stop \
+	--ignore \
+	--cidfile=%t/%n.ctr-id
+
+ExecStopPost=/usr/bin/podman rm \
+	--force \
+	--ignore \
+	--cidfile=%t/%n.ctr-id
+
+[Install]
+WantedBy=default.target
