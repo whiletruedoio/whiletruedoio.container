@@ -23,7 +23,7 @@ ExecStart=/usr/bin/podman run \
 	--detach \
 	--tty \
 	--label "io.containers.autoupdate=registry" \
-	--volume gitea-db:/var/lib/mysql \
+	--volume gitea-db:/var/lib/mysql/:Z \
 	--network=gitea \
 	--env MARIADB_RANDOM_ROOT_PASSWORD=true \
 	--env MARIADB_DATABASE={{ gitea_db_name }} \

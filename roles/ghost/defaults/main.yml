@@ -1,0 +1,27 @@
+---
+# roles/ghost/defaults/main.yml
+
+## Deployment Management
+
+ghost_net_port_http: "8082"
+ghost_net_name: "ghost"
+
+## Database Management
+
+ghost_db_image_name: "docker.io/library/mysql"
+ghost_db_image_tag: "8"
+ghost_db_image_auto_update: true
+
+ghost_db_name: "ghost"
+ghost_db_user: "ghost"
+ghost_db_pass: "{{ database_pass | mandatory }}"
+
+## App Management
+
+ghost_app_image_name: "docker.io/library/ghost"
+ghost_app_image_tag: "5"
+ghost_app_image_auto_update: true
+
+ghost_admin_user: "ghost-admin"
+ghost_admin_pass: "{{ admin_pass | mandatory }}"
+...

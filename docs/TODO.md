@@ -2,9 +2,9 @@
 
 ## Applications
 
-- [ ] nextcloud
-- [ ] gitea
-- [ ] ghost
+- [x] nextcloud
+- [x] gitea
+- [x] ghost
 - [ ] mastodon
 - [ ] matrix
 - [ ] dailynotes
@@ -27,6 +27,7 @@
 - [ ] minetest
 - [ ] veloren
 - [ ] plausible https://plausible.io/docs/self-hosting
+- [ ] migrate podman and k3s roles from whiletruedoio.general
 
 ## Single services (for development or references)
 

@@ -1,5 +1,5 @@
 [Unit]
-Description=Podman container-nextcloud-app.service
+Description=Podman container-ghost-db.service
 Documentation=man:podman-generate-systemd(1)
 Wants=network-online.target
 After=network-online.target
@@ -20,28 +20,24 @@ ExecStart=/usr/bin/podman run \
 	--rm \
 	--sdnotify=conmon \
 	--replace \
-	--publish {{ nextcloud_net_port }}:80/tcp \
 	--detach \
 	--tty \
 	--label "io.containers.autoupdate=registry" \
-	--volume nextcloud-app:/var/www/html/:Z \
-	--network={{ nextcloud_net_name }} \
-	--env MYSQL_DATABASE={{ nextcloud_db_name }} \
-	--env MYSQL_USER={{ nextcloud_db_user }} \
-	--env MYSQL_PASSWORD={{ nextcloud_db_pass }} \
-	--env MYSQL_HOST=nextcloud-db \
-	--env NEXTCLOUD_ADMIN_USER={{ nextcloud_admin_user }} \
-	--env NEXTCLOUD_ADMIN_PASSWORD={{ nextcloud_admin_pass }} \
-	--name=nextcloud-app \
-	{{ nextcloud_app_image_name }}:{{ nextcloud_app_image_tag }}
+	--volume ghost-db:/var/lib/mysql:Z \
+	--network=ghost \
+	--env MYSQL_RANDOM_ROOT_PASSWORD=true \
+	--env MYSQL_DATABASE={{ ghost_db_name }} \
+	--env MYSQL_USER={{ ghost_db_user }} \
+	--env MYSQL_PASSWORD={{ ghost_db_pass }} \
+	--name=ghost-db \
+	{{ ghost_db_image_name }}:{{ ghost_db_image_tag }}
 
 ExecStop=/usr/bin/podman stop \
 	--ignore \
 	--cidfile=%t/%n.ctr-id
 
 ExecStopPost=/usr/bin/podman rm \
-	--force \
-	--ignore \
+	--force --ignore \
 	--cidfile=%t/%n.ctr-id
 
 [Install]

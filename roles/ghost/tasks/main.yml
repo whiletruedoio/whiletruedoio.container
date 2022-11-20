@@ -1,0 +1,113 @@
+---
+# roles/ghost/tasks/main.yml
+
+## Prerequisites
+
+- name: "Manage podman Socket"
+  ansible.builtin.service:
+    name: "podman.socket"
+    state: "started"
+  become: true
+  tags:
+    - "nextcloud"
+    - "podman"
+    - "service"
+
+- name: "Manage podman-auto-update Timer"
+  ansible.builtin.service:
+    name: "podman-auto-update.timer"
+    enabled: true
+  become: true
+  tags:
+    - "nextcloud"
+    - "podman"
+    - "service"
+
+## Network
+
+- name: "Create ghost Podman Network"
+  containers.podman.podman_network:
+    name: "{{ ghost_net_name }}"
+    state: "present"
+  become: true
+  tags:
+    - "ghost"
+    - "podman"
+    - "network"
+
+## Database
+
+- name: "Pull ghost-db Image"
+  containers.podman.podman_image:
+    name: "{{ ghost_db_image_name }}"
+    tag: "{{ ghost_db_image_tag }}"
+    state: "present"
+  become: true
+  tags:
+    - "ghost"
+    - "podman"
+    - "image"
+
+- name: "Create ghost-db Service File"
+  ansible.builtin.template:
+    src: "container-ghost-db.service.j2"
+    dest: "/etc/systemd/system/container-ghost-db.service"
+    owner: "root"
+    group: "root"
+    mode: 0644
+  become: true
+  tags:
+    - "ghost"
+    - "podman"
+    - "service"
+
+- name: "Start & Enable ghost-db Service"
+  ansible.builtin.systemd:
+    name: "container-ghost-db.service"
+    state: "started"
+    enabled: true
+    daemon_reload: true
+  become: true
+  tags:
+    - "ghost"
+    - "podman"
+    - "service"
+
+## Application
+
+- name: "Pull ghost-app Image"
+  containers.podman.podman_image:
+    name: "{{ ghost_app_image_name }}"
+    tag: "{{ ghost_app_image_tag }}"
+    state: "present"
+  become: true
+  tags:
+    - "ghost"
+    - "podman"
+    - "image"
+
+- name: "Create ghost-app Service File"
+  ansible.builtin.template:
+    src: "container-ghost-app.service.j2"
+    dest: "/etc/systemd/system/container-ghost-app.service"
+    owner: "root"
+    group: "root"
+    mode: 0644
+  become: true
+  tags:
+    - "ghost"
+    - "podman"
+    - "service"
+
+- name: "Start & Enable ghost-app Service"
+  ansible.builtin.systemd:
+    name: "container-ghost-app.service"
+    state: "started"
+    enabled: true
+    daemon_reload: true
+  become: true
+  tags:
+    - "ghost"
+    - "podman"
+    - "service"
+...

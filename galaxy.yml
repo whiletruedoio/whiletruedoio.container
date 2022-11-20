@@ -3,7 +3,8 @@
 
 namespace: "whiletruedoio"
 name: "container"
-description: "Ansible collection to provide prepared container deployments."
+description: "Ansible collection to provide container setups and prepared
+              container deployments."
 
 version: "1.0.0"
 

@@ -12,7 +12,8 @@ reference: https://commonmark.org/
 
 # Ansible - whiletruedoio.container
 
-Ansible collection to provide prepared container deployments.
+Ansible collection to provide container setups and prepared container
+deployments.
 
 ## Disclaimer
 

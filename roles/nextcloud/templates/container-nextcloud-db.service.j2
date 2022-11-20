@@ -23,7 +23,7 @@ ExecStart=/usr/bin/podman run \
 	--detach \
 	--tty \
 	--label "io.containers.autoupdate=registry" \
-	--volume nextcloud-db:/var/lib/mysql \
+	--volume nextcloud-db:/var/lib/mysql/:Z \
 	--network=nextcloud \
 	--env MARIADB_RANDOM_ROOT_PASSWORD=true \
 	--env MARIADB_DATABASE={{ nextcloud_db_name }} \
