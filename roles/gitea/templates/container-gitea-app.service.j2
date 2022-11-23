@@ -20,8 +20,8 @@ ExecStart=/usr/bin/podman run \
 	--rm \
 	--sdnotify=conmon \
 	--replace \
-	--publish {{ gitea_net_port_http }}:3000/tcp \
-	--publish {{ gitea_net_port_ssh }}:2222/tcp \
+	--publish {{ gitea_publish_http }}:3000/tcp \
+	--publish {{ gitea_publish_ssh }}:2222/tcp \
 	--detach \
 	--tty \
 	--label "io.containers.autoupdate=registry" \

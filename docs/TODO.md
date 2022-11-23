@@ -2,13 +2,14 @@
 
 ## Applications
 
-- [x] nextcloud (8080)
-- [x] gitea (8081)
-- [x] ghost (8082)
-- [x] owncast (8083)
-- [x] searx (8084)
-- [ ] castopod (8085)
-- [x] logpaste (8086)
+- [x] nextcloud
+- [x] gitea
+- [x] ghost
+- [x] owncast
+- [o] searx
+- [ ] castopod
+- [x] logpaste
+- [x] pihole
 - [ ] mastodon
 - [ ] matrix
 - [ ] dailynotes

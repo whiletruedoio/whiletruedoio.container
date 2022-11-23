@@ -20,7 +20,7 @@ ExecStart=/usr/bin/podman run \
 	--rm \
 	--sdnotify=conmon \
 	--replace \
-	--publish {{ nextcloud_net_port }}:80/tcp \
+	--publish {{ nextcloud_publish }}:80/tcp \
 	--detach \
 	--tty \
 	--label "io.containers.autoupdate=registry" \

@@ -1,0 +1,14 @@
+---
+- name: "Install pihole Podman Containers"
+  hosts: "localhost"
+
+  tasks:
+
+    - name: "Import pihole Role"
+      ansible.builtin.import_role:
+        name: "whiletruedoio.container.pihole"
+      vars:
+        admin_pass: "password"
+        pihole_publish_dnsu: "xxx.xxx.xxx.xxx:53"
+        pihole_publish_dnst: "xxx.xxx.xxx.xxx:53"
+...

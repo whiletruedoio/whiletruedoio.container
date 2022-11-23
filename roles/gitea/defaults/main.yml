@@ -3,8 +3,9 @@
 
 ## Deployment Management
 
-gitea_net_port_http: "8081"
-gitea_net_port_ssh: "2222"
+gitea_publish_http: "3000"
+gitea_publish_ssh: "2222"
+
 gitea_net_name: "gitea"
 
 ## Database Management

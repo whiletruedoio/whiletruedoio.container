@@ -1,0 +1,24 @@
+---
+# roles/pihole/defaults/main.yml
+
+## Deployment Management
+
+pihole_net_name: "pihole"
+
+pihole_publish_http: "80"
+# For systems with a local dns resolver like systemd-resolved or dnsmasq, you
+# need to adjust thes ports to a format of IP_ADDRESS:PORT, since *:53 is not
+# available
+pihole_publish_dnsu: "53"
+pihole_publish_dnst: "53"
+# Not supported yet, since it needs tuning for NET_HOST and capabilities
+# pihole_publish_dhcp: "67"
+
+## App Management
+
+pihole_app_image_name: "docker.io/pihole/pihole"
+pihole_app_image_tag: "latest"
+pihole_app_image_auto_update: true
+
+pihole_admin_pass: "{{ admin_pass | mandatory }}"
+...

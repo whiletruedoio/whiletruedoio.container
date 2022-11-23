@@ -3,7 +3,8 @@
 
 ## Deployment Management
 
-ghost_net_port_http: "8082"
+ghost_publish_http: "2368"
+
 ghost_net_name: "ghost"
 
 ## Database Management

@@ -20,7 +20,7 @@ ExecStart=/usr/bin/podman run \
 	--rm \
 	--sdnotify=conmon \
 	--replace \
-	--publish {{ ghost_net_port_http }}:2368/tcp \
+	--publish {{ ghost_publish_http }}:2368/tcp \
 	--detach \
 	--tty \
 	--label "io.containers.autoupdate=registry" \
@@ -31,7 +31,7 @@ ExecStart=/usr/bin/podman run \
 	--env database__connection__user={{ ghost_db_user }} \
 	--env database__connection__password={{ ghost_db_pass }} \
 	--env database__connection__database={{ ghost_db_name }} \
-	--env url="http://localhost:{{ ghost_net_port_http }}" \
+	--env url="http://localhost:{{ ghost_publish_http }}" \
 	--name=ghost-app \
 	{{ ghost_app_image_name }}:{{ ghost_app_image_tag }}
 

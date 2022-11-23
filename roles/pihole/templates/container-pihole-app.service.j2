@@ -1,5 +1,5 @@
 [Unit]
-Description=Podman container-logpaste-app.service
+Description=Podman container-pihole-app.service
 Documentation=man:podman-generate-systemd(1)
 Wants=network-online.target
 After=network-online.target
@@ -20,15 +20,18 @@ ExecStart=/usr/bin/podman run \
 	--rm \
 	--sdnotify=conmon \
 	--replace \
-	--publish {{ logpaste_publish_http }}:3001/tcp \
+	--publish {{ pihole_publish_http }}:80/tcp \
+	--publish {{ pihole_publish_dnsu }}:53/tcp \
+	--publish {{ pihole_publish_dnst }}:53/udp \
 	--detach \
 	--tty \
 	--label "io.containers.autoupdate=registry" \
-	--volume logpaste-app:/app/data:Z \
-	--network=logpaste \
-	--env PORT=3001 \
-	--name=logpaste-app \
-	{{ logpaste_app_image_name }}:{{ logpaste_app_image_tag }}
+	--volume pihole-app-conf:/etc/pihole/:Z \
+	--volume pihole-app-dns:/etc/dnsmasq.d/:Z \
+	--network=pihole \
+	--env "WEBPASSWORD={{ pihole_admin_pass }}" \
+	--name=pihole-app \
+	{{ pihole_app_image_name }}:{{ pihole_app_image_tag }}
 
 ExecStop=/usr/bin/podman stop \
 	--ignore \

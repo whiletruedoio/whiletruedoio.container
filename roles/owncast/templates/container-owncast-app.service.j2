@@ -20,8 +20,8 @@ ExecStart=/usr/bin/podman run \
 	--rm \
 	--sdnotify=conmon \
 	--replace \
-	--publish {{ owncast_net_port_http }}:8080/tcp \
-	--publish {{ owncast_net_port_rtmp }}:1935/tcp \
+	--publish {{ owncast_publish_http }}:8080/tcp \
+	--publish {{ owncast_publish_rtmp }}:1935/tcp \
 	--detach \
 	--tty \
 	--label "io.containers.autoupdate=registry" \

@@ -3,7 +3,7 @@
 
 ## Deployment Management
 
-logpaste_net_port_http: "8086"
+logpaste_publish_http: "3001"
 logpaste_net_name: "logpaste"
 
 ## App Management

@@ -3,8 +3,8 @@
 
 ## Deployment Management
 
-owncast_net_port_http: "8083"
-owncast_net_port_rtmp: "1935"
+owncast_publish_http: "8080"
+owncast_publish_rtmp: "1935"
 owncast_net_name: "owncast"
 
 ## App Management
