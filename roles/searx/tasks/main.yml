@@ -1,0 +1,133 @@
+---
+# roles/searx/tasks/main.yml
+
+## Prerequisites
+
+- name: "Manage podman Socket"
+  ansible.builtin.service:
+    name: "podman.socket"
+    state: "started"
+  become: true
+  tags:
+    - "searx"
+    - "podman"
+    - "service"
+
+- name: "Manage podman-auto-update Timer"
+  ansible.builtin.service:
+    name: "podman-auto-update.timer"
+    enabled: true
+  become: true
+  tags:
+    - "searx"
+    - "podman"
+    - "service"
+
+## Network
+
+- name: "Create searx Podman Network"
+  containers.podman.podman_network:
+    name: "{{ searx_net_name }}"
+    state: "present"
+  become: true
+  tags:
+    - "searx"
+    - "podman"
+    - "network"
+
+## Redis
+
+- name: "Pull searx-redis Image"
+  containers.podman.podman_image:
+    name: "{{ searx_redis_image_name }}"
+    tag: "{{ searx_redis_image_tag }}"
+    state: "present"
+  become: true
+  tags:
+    - "searx"
+    - "podman"
+    - "image"
+
+- name: "Create searx-redis Service File"
+  ansible.builtin.template:
+    src: "container-searx-redis.service.j2"
+    dest: "/etc/systemd/system/container-searx-redis.service"
+    owner: "root"
+    group: "root"
+    mode: 0644
+  become: true
+  tags:
+    - "searx"
+    - "podman"
+    - "service"
+
+- name: "Start & Enable searx-redis Service"
+  ansible.builtin.systemd:
+    name: "container-searx-redis.service"
+    state: "started"
+    enabled: true
+    daemon_reload: true
+  become: true
+  tags:
+    - "searx"
+    - "podman"
+    - "service"
+
+## Application
+
+- name: "Pull searx-app Image"
+  containers.podman.podman_image:
+    name: "{{ searx_app_image_name }}"
+    tag: "{{ searx_app_image_tag }}"
+    state: "present"
+  become: true
+  tags:
+    - "searx"
+    - "podman"
+    - "image"
+
+- name: "Create searx-app Volume"
+  containers.podman.podman_volume:
+    state: "present"
+    name: "searx-app"
+  become: true
+  tags:
+    - "searx"
+    - "podman"
+    - "volume"
+
+- name: "Manage searx-app Configuration"
+  ansible.builtin.template:
+    src: "settings.yml.j2"
+    dest: "/var/lib/containers/storage/volumes/searx-app/_data/"
+  become: true
+  tags:
+    - "searx"
+    - "podman"
+    - "configuration"
+
+- name: "Create searx-app Service File"
+  ansible.builtin.template:
+    src: "container-searx-app.service.j2"
+    dest: "/etc/systemd/system/container-searx-app.service"
+    owner: "root"
+    group: "root"
+    mode: 0644
+  become: true
+  tags:
+    - "searx"
+    - "podman"
+    - "service"
+
+- name: "Start & Enable searx-app Service"
+  ansible.builtin.systemd:
+    name: "container-searx-app.service"
+    state: "started"
+    enabled: true
+    daemon_reload: true
+  become: true
+  tags:
+    - "searx"
+    - "podman"
+    - "service"
+...

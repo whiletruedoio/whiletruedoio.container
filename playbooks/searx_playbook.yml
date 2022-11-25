@@ -7,4 +7,6 @@
     - name: "Import searx Role"
       ansible.builtin.import_role:
         name: "whiletruedoio.container.searx"
+      vars:
+        secret_key: "your_SECRET_key_GOES_here"
 ...

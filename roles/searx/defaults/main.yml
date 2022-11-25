@@ -1,0 +1,22 @@
+---
+# roles/searx/defaults/main.yml
+
+## Deployment Management
+
+searx_net_name: "searx"
+
+searx_publish_http: "8080"
+
+## App Management
+
+searx_redis_image_name: "docker.io/library/redis"
+searx_redis_image_tag: "alpine"
+searx_redis_image_auto_update: true
+
+searx_app_image_name: "docker.io/searxng/searxng"
+searx_app_image_tag: "latest"
+searx_app_image_auto_update: true
+
+searx_app_base_url: "false"
+searx_app_secret_key: "{{ secret_key | mandatory }}"
+...
