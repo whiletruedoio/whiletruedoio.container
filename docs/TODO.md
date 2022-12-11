@@ -6,14 +6,15 @@
 - [x] gitea
 - [x] ghost
 - [x] owncast
-- [o] searx
-- [ ] castopod
+- [x] searx
+- [o] castopod
 - [x] logpaste
 - [x] pihole
 - [ ] mastodon
 - [ ] matrix
 - [ ] dailynotes
 - [ ] homer dashboard
+- [ ] homeassistant
 - [ ] wordpress
 - [ ] jitsi
 - [ ] peertube
@@ -30,6 +31,15 @@
 - [ ] plausible https://plausible.io/docs/self-hosting
 - [ ] migrate podman and k3s roles from whiletruedoio.general
 - [ ] hedgedoc
+- [ ] plausible
+- [ ] netbird
+- [ ] netmaker
+- [ ] thinger.io
+- [ ] thingsboard
+- [ ] AWX
+- [ ] ansible semaphore
+- [ ] ansible ara
+- [ ] gotify
 
 ## Single services (for development or references)
 
@@ -37,3 +47,7 @@
 - [ ] postgresql
 - [ ] apache httpd
 - [ ] nginx
+- [ ] mosquitto
+- [ ] rabbitmq
+- [ ] node red
+- [ ] redis

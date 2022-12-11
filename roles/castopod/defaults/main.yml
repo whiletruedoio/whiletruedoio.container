@@ -1,0 +1,58 @@
+---
+# roles/castopod/defaults/main.yml
+
+## Deployment Management
+
+castopod_publish_http: "80"
+castopod_publish_https: "443"
+
+castopod_app_net_name: "castopod-app"
+castopod_db_net_name: "castopod-db"
+
+## Database Management
+
+castopod_db_image_name: "docker.io/library/mariadb"
+castopod_db_image_tag: "10"
+castopod_db_image_auto_update: true
+
+castopod_db_name: "castopod"
+castopod_db_user: "castopod"
+castopod_db_pass: "{{ database_pass | mandatory }}"
+
+castopod_db_volume: "castopod-db"
+
+## App Management
+
+castopod_app_image_name: "docker.io/castopod/app"
+castopod_app_image_tag: "latest"
+castopod_app_image_auto_update: true
+
+castopod_app_media_volume: "castopod-media"
+
+castopod_app_analytics_salt: "changeme"
+castopod_app_base_url: "http://castopod.local"
+
+## Cache Management
+
+castopod_cache_image_name: "docker.io/library/redis"
+castopod_cache_image_tag: "7.0-alpine"
+castopod_cache_image_auto_update: true
+
+castopod_cache_volume: "castopod-cache"
+
+## Web Management
+
+castopod_web_image_name: "docker.io/castopod/web-server"
+castopod_web_image_tag: "latest"
+castopod_web_image_auto_update: true
+
+castopod_web_media_volume: "{{ castopod_app_media_volume }}"
+
+## Video Clipper Management
+
+castopod_clipper_image_name: "docker.io/castopod/video-clipper"
+castopod_clipper_image_tag: "latest"
+castopod_clipper_image_auto_update: true
+
+castopod_clipper_media_volume: "{{ castopod_app_media_volume }}"
+...

@@ -1,0 +1,237 @@
+---
+# roles/castopod/tasks/main.yml
+
+## Prerequisites
+
+- name: "Manage podman Socket"
+  ansible.builtin.service:
+    name: "podman.socket"
+    state: "started"
+  become: true
+  tags:
+    - "castopod"
+    - "podman"
+    - "service"
+
+- name: "Manage podman-auto-update Timer"
+  ansible.builtin.service:
+    name: "podman-auto-update.timer"
+    enabled: true
+  become: true
+  tags:
+    - "castopod"
+    - "podman"
+    - "service"
+
+## Network Management
+
+- name: "Create castopod-app Podman Network"
+  containers.podman.podman_network:
+    name: "{{ castopod_app_net_name }}"
+    state: "present"
+  become: true
+  tags:
+    - "castopod"
+    - "podman"
+    - "network"
+
+- name: "Create castopod-db Podman Network"
+  containers.podman.podman_network:
+    name: "{{ castopod_db_net_name }}"
+    state: "present"
+  become: true
+  tags:
+    - "castopod"
+    - "podman"
+    - "network"
+
+## Database Management
+
+- name: "Pull castopod-db Image"
+  containers.podman.podman_image:
+    name: "{{ castopod_db_image_name }}"
+    tag: "{{ castopod_db_image_tag }}"
+    state: "present"
+  become: true
+  tags:
+    - "castopod"
+    - "podman"
+    - "image"
+
+- name: "Create castopod-db Service File"
+  ansible.builtin.template:
+    src: "container-castopod-db.service.j2"
+    dest: "/etc/systemd/system/container-castopod-db.service"
+    owner: "root"
+    group: "root"
+    mode: 0644
+  become: true
+  tags:
+    - "castopod"
+    - "podman"
+    - "service"
+
+- name: "Start & Enable castopod-db Service"
+  ansible.builtin.systemd:
+    name: "container-castopod-db.service"
+    state: "started"
+    enabled: true
+    daemon_reload: true
+  become: true
+  tags:
+    - "castopod"
+    - "podman"
+    - "service"
+
+## Cache Management
+
+- name: "Pull castopod-cache Image"
+  containers.podman.podman_image:
+    name: "{{ castopod_cache_image_name }}"
+    tag: "{{ castopod_cache_image_tag }}"
+    state: "present"
+  become: true
+  tags:
+    - "castopod"
+    - "podman"
+    - "image"
+
+- name: "Create castopod-cache Service File"
+  ansible.builtin.template:
+    src: "container-castopod-cache.service.j2"
+    dest: "/etc/systemd/system/container-castopod-cache.service"
+    owner: "root"
+    group: "root"
+    mode: 0644
+  become: true
+  tags:
+    - "castopod"
+    - "podman"
+    - "service"
+
+- name: "Start & Enable castopod-cache Service"
+  ansible.builtin.systemd:
+    name: "container-castopod-cache.service"
+    state: "started"
+    enabled: true
+    daemon_reload: true
+  become: true
+  tags:
+    - "castopod"
+    - "podman"
+    - "service"
+
+## Application Management
+
+- name: "Pull castopod-app Image"
+  containers.podman.podman_image:
+    name: "{{ castopod_app_image_name }}"
+    tag: "{{ castopod_app_image_tag }}"
+    state: "present"
+  become: true
+  tags:
+    - "castopod"
+    - "podman"
+    - "image"
+
+- name: "Create castopod-app Service File"
+  ansible.builtin.template:
+    src: "container-castopod-app.service.j2"
+    dest: "/etc/systemd/system/container-castopod-app.service"
+    owner: "root"
+    group: "root"
+    mode: 0644
+  become: true
+  tags:
+    - "castopod"
+    - "podman"
+    - "service"
+
+- name: "Start & Enable castopod-app Service"
+  ansible.builtin.systemd:
+    name: "container-castopod-app.service"
+    state: "started"
+    enabled: true
+    daemon_reload: true
+  become: true
+  tags:
+    - "castopod"
+    - "podman"
+    - "service"
+
+## Web Management
+
+- name: "Pull castopod-web Image"
+  containers.podman.podman_image:
+    name: "{{ castopod_web_image_name }}"
+    tag: "{{ castopod_web_image_tag }}"
+    state: "present"
+  become: true
+  tags:
+    - "castopod"
+    - "podman"
+    - "image"
+
+- name: "Create castopod-web Service File"
+  ansible.builtin.template:
+    src: "container-castopod-web.service.j2"
+    dest: "/etc/systemd/system/container-castopod-web.service"
+    owner: "root"
+    group: "root"
+    mode: 0644
+  become: true
+  tags:
+    - "castopod"
+    - "podman"
+    - "service"
+
+- name: "Start & Enable castopod-web Service"
+  ansible.builtin.systemd:
+    name: "container-castopod-web.service"
+    state: "started"
+    enabled: true
+    daemon_reload: true
+  become: true
+  tags:
+    - "castopod"
+    - "podman"
+    - "service"
+
+## Video Clipper Management
+
+- name: "Pull castopod-clipper Image"
+  containers.podman.podman_image:
+    name: "{{ castopod_clipper_image_name }}"
+    tag: "{{ castopod_clipper_image_tag }}"
+    state: "present"
+  become: true
+  tags:
+    - "castopod"
+    - "podman"
+    - "image"
+
+- name: "Create castopod-clipper Service File"
+  ansible.builtin.template:
+    src: "container-castopod-clipper.service.j2"
+    dest: "/etc/systemd/system/container-castopod-clipper.service"
+    owner: "root"
+    group: "root"
+    mode: 0644
+  become: true
+  tags:
+    - "castopod"
+    - "podman"
+    - "service"
+
+- name: "Start & Enable castopod-clipper Service"
+  ansible.builtin.systemd:
+    name: "container-castopod-clipper.service"
+    state: "started"
+    enabled: true
+    daemon_reload: true
+  become: true
+  tags:
+    - "castopod"
+    - "podman"
+    - "service"
+...

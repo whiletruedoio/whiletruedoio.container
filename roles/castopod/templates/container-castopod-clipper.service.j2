@@ -1,0 +1,45 @@
+[Unit]
+Description=Podman container-castopod-clipper.service
+Documentation=man:podman-generate-systemd(1)
+Wants=network-online.target
+After=network-online.target
+RequiresMountsFor=%t/containers
+
+[Service]
+Environment=PODMAN_SYSTEMD_UNIT=%n
+Restart=on-failure
+TimeoutStopSec=70
+Type=notify
+NotifyAccess=all
+
+ExecStartPre=/bin/rm -f %t/%n.ctr-id
+
+ExecStart=/usr/bin/podman run \
+	--cidfile=%t/%n.ctr-id \
+	--cgroups=no-conmon \
+	--rm \
+	--sdnotify=conmon \
+	--replace \
+	--detach \
+	--tty \
+	--label "io.containers.autoupdate=registry" \
+	--volume castopod-app-data:/opt/castopod/public/media:Z \
+	--network=castopod-db \
+	--env CP_DATABASE_HOSTNAME=castopod-db \
+	--env CP_DATABASE_NAME={{ castopod_db_name }} \
+	--env CP_DATABASE_USERNAME={{ castopod_db_user }} \
+	--env CP_DATABASE_PASSWORD={{ castopod_db_pass }} \
+	--name=castopod-clipper \
+	{{ castopod_clipper_image_name }}:{{ castopod_clipper_image_tag }}
+
+ExecStop=/usr/bin/podman stop \
+	--ignore \
+	--cidfile=%t/%n.ctr-id
+
+ExecStopPost=/usr/bin/podman rm \
+	--force \
+	--ignore \
+	--cidfile=%t/%n.ctr-id
+
+[Install]
+WantedBy=default.target

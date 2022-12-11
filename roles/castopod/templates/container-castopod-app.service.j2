@@ -1,0 +1,50 @@
+[Unit]
+Description=Podman container-castopod-app.service
+Documentation=man:podman-generate-systemd(1)
+Wants=network-online.target
+After=network-online.target
+RequiresMountsFor=%t/containers
+
+[Service]
+Environment=PODMAN_SYSTEMD_UNIT=%n
+Restart=on-failure
+TimeoutStopSec=70
+Type=notify
+NotifyAccess=all
+
+ExecStartPre=/bin/rm -f %t/%n.ctr-id
+
+ExecStart=/usr/bin/podman run \
+	--cidfile=%t/%n.ctr-id \
+	--cgroups=no-conmon \
+	--rm \
+	--sdnotify=conmon \
+	--replace \
+	--detach \
+	--tty \
+	--label "io.containers.autoupdate=registry" \
+	--volume {{ castopod_app_media_volume }}:/opt/castopod/public/media:Z \
+	--network=castopod-app \
+	--network=castopod-db \
+	--env CP_DATABASE_HOSTNAME=castopod-db \
+	--env CP_DATABASE_NAME={{ castopod_db_name }} \
+	--env CP_DATABASE_USERNAME={{ castopod_db_user }} \
+	--env CP_DATABASE_PASSWORD={{ castopod_db_pass }} \
+	--env CP_BASEURL={{ castopod_app_base_url }} \
+	--env CP_ANALYTICS_SALT={{ castopod_app_analytics_salt }} \
+	--env CP_CACHE_HANDLER=redis \
+	--env CP_REDIS_HOST=castopod-cache \
+	--name=castopod-app \
+	{{ castopod_app_image_name }}:{{ castopod_app_image_tag }}
+
+ExecStop=/usr/bin/podman stop \
+	--ignore \
+	--cidfile=%t/%n.ctr-id
+
+ExecStopPost=/usr/bin/podman rm \
+	--force \
+	--ignore \
+	--cidfile=%t/%n.ctr-id
+
+[Install]
+WantedBy=default.target

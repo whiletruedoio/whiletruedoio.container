@@ -1,0 +1,16 @@
+---
+- name: "Install castopod Podman Containers"
+  hosts: "localhost"
+
+  tasks:
+
+    - name: "Import castopod Role"
+      ansible.builtin.import_role:
+        name: "whiletruedoio.container.castopod"
+      vars:
+        database_pass: "password"
+        # Ensure this is a valid domain, pointing to the host that runs the
+        # containers. For testing, this can be done in /etc/hosts
+        castopod_app_base_url: "http://castopod.local"
+
+...
