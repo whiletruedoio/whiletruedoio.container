@@ -1,0 +1,10 @@
+---
+- name: "Install nodered Podman Containers"
+  hosts: "localhost"
+
+  tasks:
+
+    - name: "Import nodered Role"
+      ansible.builtin.import_role:
+        name: "whiletruedoio.container.nodered"
+...

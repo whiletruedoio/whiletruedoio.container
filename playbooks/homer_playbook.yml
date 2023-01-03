@@ -1,0 +1,10 @@
+---
+- name: "Install homer Podman Containers"
+  hosts: "localhost"
+
+  tasks:
+
+    - name: "Import homer Role"
+      ansible.builtin.import_role:
+        name: "whiletruedoio.container.homer"
+...

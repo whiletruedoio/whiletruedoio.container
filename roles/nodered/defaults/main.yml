@@ -1,0 +1,15 @@
+---
+# roles/nodered/defaults/main.yml
+
+## Deployment Management
+
+nodered_publish_http: "1880"
+nodered_net_name: "nodered"
+
+## App Management
+
+nodered_app_image_name: "docker.io/nodered/node-red"
+nodered_app_image_tag: "latest"
+nodered_app_image_auto_update: true
+nodered_app_volume: "nodered-app"
+...

@@ -1,0 +1,74 @@
+---
+# roles/nodered/tasks/main.yml
+
+## Prerequisites
+
+- name: "Manage podman Socket"
+  ansible.builtin.service:
+    name: "podman.socket"
+    state: "started"
+  become: true
+  tags:
+    - "nodered"
+    - "podman"
+    - "service"
+
+- name: "Manage podman-auto-update Timer"
+  ansible.builtin.service:
+    name: "podman-auto-update.timer"
+    enabled: true
+  become: true
+  tags:
+    - "nodered"
+    - "podman"
+    - "service"
+
+## Network
+
+- name: "Create nodered Podman Network"
+  containers.podman.podman_network:
+    name: "{{ nodered_net_name }}"
+    state: "present"
+  become: true
+  tags:
+    - "nodered"
+    - "podman"
+    - "network"
+## Application
+
+- name: "Pull nodered-app Image"
+  containers.podman.podman_image:
+    name: "{{ nodered_app_image_name }}"
+    tag: "{{ nodered_app_image_tag }}"
+    state: "present"
+  become: true
+  tags:
+    - "nodered"
+    - "podman"
+    - "image"
+
+- name: "Create nodered-app Service File"
+  ansible.builtin.template:
+    src: "container-nodered-app.service.j2"
+    dest: "/etc/systemd/system/container-nodered-app.service"
+    owner: "root"
+    group: "root"
+    mode: 0644
+  become: true
+  tags:
+    - "nodered"
+    - "podman"
+    - "service"
+
+- name: "Start & Enable nodered-app Service"
+  ansible.builtin.systemd:
+    name: "container-nodered-app.service"
+    state: "started"
+    enabled: true
+    daemon_reload: true
+  become: true
+  tags:
+    - "nodered"
+    - "podman"
+    - "service"
+...

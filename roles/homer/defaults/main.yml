@@ -1,0 +1,19 @@
+---
+# roles/homer/defaults/main.yml
+
+## Deployment Management
+
+homer_publish_http: "8080"
+homer_net_name: "homer"
+
+## App Management
+
+homer_app_image_name: "docker.io/b4bz/homer"
+homer_app_image_tag: "latest"
+homer_app_image_auto_update: true
+homer_app_volume: "homer-app"
+
+## Configuration Management
+
+homer_config_src: "config.yml.j2"
+...

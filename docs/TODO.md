@@ -7,13 +7,15 @@
 - [x] ghost
 - [x] owncast
 - [x] searx
-- [o] castopod
+- [x] castopod
 - [x] logpaste
 - [x] pihole
+- [x] homer dashboard
+- [x] node red
+- [ ] mosquitto
+- [ ] dailynotes
 - [ ] mastodon
 - [ ] matrix
-- [ ] dailynotes
-- [ ] homer dashboard
 - [ ] homeassistant
 - [ ] wordpress
 - [ ] jitsi
@@ -40,14 +42,10 @@
 - [ ] ansible semaphore
 - [ ] ansible ara
 - [ ] gotify
-
-## Single services (for development or references)
-
+- [ ] https://thingsboard.io/
 - [ ] mariadb
 - [ ] postgresql
 - [ ] apache httpd
 - [ ] nginx
-- [ ] mosquitto
 - [ ] rabbitmq
-- [ ] node red
 - [ ] redis
