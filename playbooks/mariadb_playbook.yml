@@ -1,0 +1,12 @@
+---
+- name: "Install mariadb Podman Containers"
+  hosts: "localhost"
+
+  tasks:
+
+    - name: "Import mariadb Role"
+      ansible.builtin.import_role:
+        name: "whiletruedoio.container.mariadb"
+      vars:
+        mariadb_db_pass: "password"
+...

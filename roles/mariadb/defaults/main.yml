@@ -1,0 +1,20 @@
+---
+# roles/mariadb/defaults/main.yml
+
+## Deployment Management
+
+mariadb_publish_mysql: "3306"
+mariadb_net_name: "mariadb-net"
+
+## Database Management
+
+mariadb_db_image_name: "docker.io/library/mariadb"
+mariadb_db_image_tag: "10"
+mariadb_db_image_auto_update: true
+mariadb_db_volume: "mariadb-db-data"
+
+mariadb_db_name: "mariadb"
+mariadb_db_user: "mariadb"
+mariadb_db_pass: ""
+mariadb_db_root: "random"
+...

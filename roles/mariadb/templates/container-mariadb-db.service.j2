@@ -1,0 +1,50 @@
+[Unit]
+Description=Podman container-mariadb-db.service
+Documentation=man:podman-generate-systemd(1)
+Wants=network-online.target
+After=network-online.target
+RequiresMountsFor=%t/containers
+
+[Service]
+Environment=PODMAN_SYSTEMD_UNIT=%n
+Restart=on-failure
+TimeoutStopSec=70
+Type=notify
+NotifyAccess=all
+
+ExecStartPre=/bin/rm -f %t/%n.ctr-id
+
+ExecStart=/usr/bin/podman run \
+	--cidfile=%t/%n.ctr-id \
+	--cgroups=no-conmon \
+	--rm \
+	--sdnotify=conmon \
+	--replace \
+	--detach \
+	--tty \
+	--network={{ mariadb_net_name }} \
+	--publish {{ mariadb_publish_mysql }}:3306/tcp \
+	--label "io.containers.autoupdate=registry" \
+	--volume {{ mariadb_db_volume }}:/var/lib/mysql/:Z \
+  {% if mariadb_db_root == '' or mariadb_db_root == 'random' %}
+	--env MARIADB_RANDOM_ROOT_PASSWORD=true \
+  {% else %}
+	--env MARIADB_RANDOM_ROOT_PASSWORD=false \
+	--env MARIADB_ROOT_PASSWORD={{ mariadb_db_root }} \
+  {% endif %}
+	--env MARIADB_DATABASE={{ mariadb_db_name }} \
+	--env MARIADB_USER={{ mariadb_db_user }} \
+	--env MARIADB_PASSWORD={{ mariadb_db_pass }} \
+	--name=mariadb-db \
+	{{ mariadb_db_image_name }}:{{ mariadb_db_image_tag }}
+
+ExecStop=/usr/bin/podman stop \
+	--ignore \
+	--cidfile=%t/%n.ctr-id
+
+ExecStopPost=/usr/bin/podman rm \
+	--force --ignore \
+	--cidfile=%t/%n.ctr-id
+
+[Install]
+WantedBy=default.target

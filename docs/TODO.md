@@ -4,6 +4,9 @@ The below list of tasks is more a rough idea of a roadmap. Some things will be
 included earlier, some later. This often depends on my own needs or
 contributions made.
 
+Anyway, the development path to 1.0.0 is the most critical one. There will be
+breaking changes until 1.0.0!
+
 ## Release 1.0.0 (base)
 
 - [x] nextcloud
@@ -17,7 +20,6 @@ contributions made.
 - [ ] postgresql
 - [ ] apache httpd
 - [ ] nginx
-- [ ] dailynotes
 - [ ] traefik
 - [ ] migrate podman and k3s roles from whiletruedoio.general
 - [ ] Handlers for service and config changes
@@ -25,8 +27,13 @@ contributions made.
 - [ ] configurable volumes
 - [ ] Documentation for roles
 - [ ] Documentation for collection
+- [ ] consistent configuration
+- [ ] consistent suffixes
+- [ ] consistent volume names
+- [ ] consistent network names
+- [ ] consistent container names
 
-## Release 1.1.0 (IoT)
+## Release 1.1.0 (IoT and Home automation)
 
 - [x] node red
 - [ ] mosquitto
@@ -34,7 +41,6 @@ contributions made.
 - [ ] homeassistant
 - [ ] netbird
 - [ ] netmaker
-- [ ] thinger.io
 - [ ] thingsboard
 
 ## Release 1.2.0 (Social)
@@ -49,21 +55,26 @@ contributions made.
 - [ ] jitsi
 - [ ] peertube
 - [ ] pixelfed
-- [ ] briefkasten <https://github.com/ndom91/briefkasten>
 - [ ] <https://writefreely.org>
-- [ ] cryptpad
 - [ ] <https://git.mills.io/prologic/shorturl>
 - [ ] <https://www.bookstackapp.com/>
 - [ ] plausible <https://plausible.io/docs/self-hosting>
-- [ ] hedgedoc
 
-## Release 1.3.0 (Gaming)
+## Release 1.3.0 (office)
+
+- [ ] dailynotes
+- [ ] cryptpad
+- [ ] hedgedoc
+- [ ] briefkasten <https://github.com/ndom91/briefkasten>
+- [ ] Wallabag
+
+## Release 1.4.0 (Gaming)
 
 - [ ] minetest
 - [ ] veloren
 - [ ] plausible
 
-## Release 1.4.0 (Develop)
+## Release 1.5.0 (Develop)
 
 - [ ] ansible semaphore
 - [ ] ansible ara
