@@ -1,0 +1,75 @@
+---
+# roles/redis/tasks/main.yml
+
+## Prerequisites
+
+- name: "Manage podman Socket"
+  ansible.builtin.service:
+    name: "podman.socket"
+    state: "started"
+  become: true
+  tags:
+    - "redis"
+    - "podman"
+    - "service"
+
+- name: "Manage podman-auto-update Timer"
+  ansible.builtin.service:
+    name: "podman-auto-update.timer"
+    enabled: true
+  become: true
+  tags:
+    - "redis"
+    - "podman"
+    - "service"
+
+## Network
+
+- name: "Create redis Podman Network"
+  containers.podman.podman_network:
+    name: "{{ redis_net_name }}"
+    state: "present"
+  become: true
+  tags:
+    - "redis"
+    - "podman"
+    - "network"
+
+## Application
+
+- name: "Pull redis-app Image"
+  containers.podman.podman_image:
+    name: "{{ redis_app_image_name }}"
+    tag: "{{ redis_app_image_tag }}"
+    state: "present"
+  become: true
+  tags:
+    - "redis"
+    - "podman"
+    - "image"
+
+- name: "Create redis-app Service File"
+  ansible.builtin.template:
+    src: "container-redis-app.service.j2"
+    dest: "/etc/systemd/system/container-redis-app.service"
+    owner: "root"
+    group: "root"
+    mode: 0644
+  become: true
+  tags:
+    - "redis"
+    - "podman"
+    - "service"
+
+- name: "Start & Enable redis-app Service"
+  ansible.builtin.systemd:
+    name: "container-redis-app.service"
+    state: "started"
+    enabled: true
+    daemon_reload: true
+  become: true
+  tags:
+    - "redis"
+    - "podman"
+    - "service"
+...

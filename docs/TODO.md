@@ -16,7 +16,7 @@ breaking changes until 1.0.0!
 - [x] pihole
 - [x] homer dashboard
 - [ ] redis
-- [ ] mariadb
+- [x] mariadb
 - [ ] postgresql
 - [ ] apache httpd
 - [ ] nginx
@@ -32,6 +32,7 @@ breaking changes until 1.0.0!
 - [ ] consistent volume names
 - [ ] consistent network names
 - [ ] consistent container names
+- [ ] enforce secure passwords/user chosen password for all roles and playbooks
 
 ## Release 1.1.0 (IoT and Home automation)
 
@@ -42,6 +43,7 @@ breaking changes until 1.0.0!
 - [ ] netbird
 - [ ] netmaker
 - [ ] thingsboard
+- [ ] docker registry
 
 ## Release 1.2.0 (Social)
 
@@ -58,21 +60,20 @@ breaking changes until 1.0.0!
 - [ ] <https://writefreely.org>
 - [ ] <https://git.mills.io/prologic/shorturl>
 - [ ] <https://www.bookstackapp.com/>
-- [ ] plausible <https://plausible.io/docs/self-hosting>
+- [ ] plausible
 
 ## Release 1.3.0 (office)
 
 - [ ] dailynotes
 - [ ] cryptpad
 - [ ] hedgedoc
-- [ ] briefkasten <https://github.com/ndom91/briefkasten>
 - [ ] Wallabag
+- [ ] briefkasten <https://github.com/ndom91/briefkasten>
 
 ## Release 1.4.0 (Gaming)
 
 - [ ] minetest
 - [ ] veloren
-- [ ] plausible
 
 ## Release 1.5.0 (Develop)
 
@@ -80,6 +81,8 @@ breaking changes until 1.0.0!
 - [ ] ansible ara
 - [ ] rabbitmq
 - [ ] woodpecker (if it works with podman)
+- [ ] Jenkins
+- [ ] harbor
 
 ## Release 2.0.0 (Docker support)
 

@@ -1,0 +1,10 @@
+---
+- name: "Install redis Podman Containers"
+  hosts: "localhost"
+
+  tasks:
+
+    - name: "Import redis Role"
+      ansible.builtin.import_role:
+        name: "whiletruedoio.container.redis"
+...

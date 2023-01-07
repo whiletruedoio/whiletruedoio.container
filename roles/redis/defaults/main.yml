@@ -1,0 +1,16 @@
+---
+# roles/redis/defaults/main.yml
+
+## Deployment Management
+
+redis_publish_port: "6379"
+redis_net_name: "redis"
+
+## App Management
+
+redis_app_image_name: "docker.io/library/redis"
+redis_app_image_tag: "7.0-alpine"
+redis_app_image_auto_update: true
+
+redis_app_volume: "redis-app-data"
+...
